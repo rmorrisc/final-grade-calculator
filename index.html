@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Final Grade Calculator</title>
+  <meta name="description" content="Free final grade calculator for students. Calculate what score you need on your final exam to reach your target grade." />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    p {
+      text-align: center;
+      color: #555;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      font-size: 18px;
+      background: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #4338ca;
+    }
+    .result {
+      margin-top: 25px;
+      padding: 15px;
+      border-radius: 8px;
+      background: #eef2ff;
+      font-size: 18px;
+      text-align: center;
+    }
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 14px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Final Grade Calculator</h1>
+    <p>Find out what score you need on your final exam.</p>
+
+    <label>Current Grade (%)</label>
+    <input type="number" id="currentGrade" placeholder="e.g. 87" />
+
+    <label>Final Exam Weight (%)</label>
+    <input type="number" id="finalWeight" placeholder="e.g. 30" />
+
+    <label>Target Course Grade (%)</label>
+    <input type="number" id="targetGrade" placeholder="e.g. 90" />
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="result" id="result" style="display:none;"></div>
+
+    <footer>
+      Free tool for students • No sign‑up required
+    </footer>
+  </div>
+
+  <script>
+    function calculate() {
+      const current = parseFloat(document.getElementById('currentGrade').value);
+      const weight = parseFloat(document.getElementById('finalWeight').value) / 100;
+      const target = parseFloat(document.getElementById('targetGrade').value);
+      const resultDiv = document.getElementById('result');
+
+      if (isNaN(current) || isNaN(weight) || isNaN(target)) {
+        resultDiv.style.display = 'block';
+        resultDiv.innerText = 'Please enter all values correctly.';
+        return;
+      }
+
+      const needed = (target - current * (1 - weight)) / weight;
+
+      resultDiv.style.display = 'block';
+
+      if (needed > 100) {
+        resultDiv.innerText = `You would need ${needed.toFixed(1)}% — this may not be possible.`;
+      } else if (needed <= 0) {
+        resultDiv.innerText = 'You already secured your target grade 🎉';
+      } else {
+        resultDiv.innerText = `You need ${needed.toFixed(1)}% on the final exam.`;
+      }
+    }
+  </script>
+</body>
+</html>
